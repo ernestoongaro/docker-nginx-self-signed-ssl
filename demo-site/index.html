@@ -1,1 +1,25 @@
-works
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+iframe {
+    height:100vh;
+    width:100%;
+}
+</style>
+<script>
+window.addEventListener("message", function (event) {
+//    console.log(JSON.parse(event.data));
+	var embedEvent = JSON.parse(event.data)
+    if(embedEvent.type  == "dashboard:filters:changed")
+   	    console.log("filter changed!");
+    if(embedEvent.type == "page:properties:changed")
+	    console.log("page properties changed!");	
+});
+</script>
+</head>
+<body>
+<h1>This ain't your grandfather's iframe!</h1>
+<iframe id="looker"  src="https://localhost:9999/embed/dashboards/1?embed_domain=https://localhost:8443"></iframe>
+</body>
+</html>
