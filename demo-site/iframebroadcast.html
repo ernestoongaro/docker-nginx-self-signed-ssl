@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+iframe {
+    height:400px;
+    width:100%;
+}
+</style>
+</head>
+<body>
+<h3>This ain't your grandfather's iframe!</h3>
+</body>
+<iframe id="iframe1"  src="https://localhost:9999/embed/dashboards/7?embed_domain=https://localhost:8443"></iframe>
+<iframe id="iframe2"></iframe>
+<script>
+window.addEventListener('hashchange',function(evt){
+  var iframe2target=getHashParam('ifr2'); 
+  console.log(iframe2target);
+  if(!iframe2target){return;}
+  if(!iframe2target.match(/[a-zA-Z0-9_]+\/[a-zA-Z0-9_]+/)){console.warn("URL not allowed for iframe2"); return;}
+  //^ or whatever validation is appropriate. Do validate. Anyone could send any URL to your parent page
+  document.querySelector('#iframe2').src="https://localhost:9999/embed/"+iframe2target;
+ })
+
+function getHashParam(k){
+        return document.location.hash.slice(1).split("&")
+        .filter(function(p){return p.indexOf(encodeURIComponent(k)+"=")===0})
+        .map(function(p){return decodeURIComponent(p.split("=").slice(1).join("="))})[0]
+    }
+</script>
+
+</html>
